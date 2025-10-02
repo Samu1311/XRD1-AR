@@ -3,12 +3,15 @@ using UnityEngine;
 public class Rotate : MonoBehaviour
 {
     // Twist and Rotate
+    public GameObject targetObject;
     public float rotationSpeed = 0.5f;
     private float lastAngle;
     private Vector2 lastMidpoint;
 
     void Update()
     {
+        if (targetObject == null) return; // Nothing to rotate
+
         if (Input.touchCount == 2)
         {
             Touch t0 = Input.GetTouch(0);
@@ -28,11 +31,11 @@ public class Rotate : MonoBehaviour
             {
                 // Y-axis rotation
                 float deltaAngle = angle - lastAngle;
-                transform.Rotate(Vector3.up, -deltaAngle * rotationSpeed, Space.World);
+                transform.Rotate(Vector3.up, -deltaAngle * rotationSpeed, Space.Self);
 
                 // X-axis rotation
                 float deltaY = midpoint.y - lastMidpoint.y;
-                transform.Rotate(Vector3.right, deltaY * 0.1f * rotationSpeed, Space.World);
+                transform.Rotate(Vector3.right, deltaY * 0.1f * rotationSpeed, Space.Self);
 
                 lastAngle = angle;
                 lastMidpoint = midpoint;
