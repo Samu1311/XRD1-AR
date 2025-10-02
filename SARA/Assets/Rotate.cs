@@ -4,7 +4,7 @@ public class Rotate : MonoBehaviour
 {
     // Twist and Rotate
     public GameObject targetObject;
-    public float rotationSpeed = 0.5f;
+    public float rotationSpeed = 3f;
     private float lastAngle;
     private Vector2 lastMidpoint;
 
@@ -31,11 +31,11 @@ public class Rotate : MonoBehaviour
             {
                 // Y-axis rotation
                 float deltaAngle = angle - lastAngle;
-                transform.Rotate(Vector3.up, -deltaAngle * rotationSpeed, Space.Self);
+                targetObject.transform.Rotate(Vector3.up, -deltaAngle * rotationSpeed, Space.Self);
 
                 // X-axis rotation
                 float deltaY = midpoint.y - lastMidpoint.y;
-                transform.Rotate(Vector3.right, deltaY * 0.1f * rotationSpeed, Space.Self);
+                targetObject.transform.Rotate(Vector3.right, deltaY * 0.1f * rotationSpeed, Space.Self);
 
                 lastAngle = angle;
                 lastMidpoint = midpoint;
