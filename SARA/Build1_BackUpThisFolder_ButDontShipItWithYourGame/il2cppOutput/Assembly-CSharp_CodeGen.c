@@ -86,6 +86,12 @@ extern void Rotate_Update_m73D585515036D9B7AAD8336BFB8567283CE4C7E7 (void);
 extern void Rotate__ctor_m0EE5CC8EB699542BFC438DC3D547D39E442E9EE4 (void);
 extern void SceneTemplate_RotateCube_Update_mAF2FB34B99E325443A80D60A7EB73DC092EAE9A6 (void);
 extern void SceneTemplate_RotateCube__ctor_mC7E11C05D25FFF6F8D7EA06AAE5598B497365CD2 (void);
+extern void SimpleDragRotate_Start_m386284A20DE515D0BF1434E5A60B8DAD16F683FC (void);
+extern void SimpleDragRotate_CreateDebugUI_mAC7B0B816CA94899CB919D8A74435C67ED9565DE (void);
+extern void SimpleDragRotate_Update_m93C66D8AFDFB051E22850C06F7C24B63D82AD478 (void);
+extern void SimpleDragRotate_HandleMouseRotation_mBC155A49453BF28AB1F030A94BEF21AF70114E5F (void);
+extern void SimpleDragRotate_UpdateDebugText_m2F208039B39DE74AA38832E2F027FA4E273002A8 (void);
+extern void SimpleDragRotate__ctor_mA5DED3E2ECC7F2BE36C012CB834B2F4C3683B5D7 (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033 (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1 (void);
 extern void CutoutMaskUI_get_materialForRendering_m1E481305FA17C6A7AC2A91C9A8BC62CBA40EB21A (void);
@@ -100,7 +106,7 @@ extern void ARFeatheredPlaneMeshVisualizerCompanion_OnDestroy_m64B601920050D7584
 extern void ARFeatheredPlaneMeshVisualizerCompanion_Update_m541F58E1FC27F7D775FE47F2C1B1A04710BC4A27 (void);
 extern void ARFeatheredPlaneMeshVisualizerCompanion_set_visualizeSurfaces_m7A7F198C97A315F6F7F58F0BDA5269863F098D68 (void);
 extern void ARFeatheredPlaneMeshVisualizerCompanion__ctor_m3871FAD2A1135D983A9B5ADCD604F22949DE985C (void);
-static Il2CppMethodPointer s_methodPointers[93] = 
+static Il2CppMethodPointer s_methodPointers[99] = 
 {
 	ARTemplateMenuManager_get_createButton_mF094F0AC7A89F9C92C57D8517519509825A145E4,
 	ARTemplateMenuManager_set_createButton_mD65905DD827D87E747095FDAF9CE38892C4340EB,
@@ -181,6 +187,12 @@ static Il2CppMethodPointer s_methodPointers[93] =
 	Rotate__ctor_m0EE5CC8EB699542BFC438DC3D547D39E442E9EE4,
 	SceneTemplate_RotateCube_Update_mAF2FB34B99E325443A80D60A7EB73DC092EAE9A6,
 	SceneTemplate_RotateCube__ctor_mC7E11C05D25FFF6F8D7EA06AAE5598B497365CD2,
+	SimpleDragRotate_Start_m386284A20DE515D0BF1434E5A60B8DAD16F683FC,
+	SimpleDragRotate_CreateDebugUI_mAC7B0B816CA94899CB919D8A74435C67ED9565DE,
+	SimpleDragRotate_Update_m93C66D8AFDFB051E22850C06F7C24B63D82AD478,
+	SimpleDragRotate_HandleMouseRotation_mBC155A49453BF28AB1F030A94BEF21AF70114E5F,
+	SimpleDragRotate_UpdateDebugText_m2F208039B39DE74AA38832E2F027FA4E273002A8,
+	SimpleDragRotate__ctor_mA5DED3E2ECC7F2BE36C012CB834B2F4C3683B5D7,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1,
 	CutoutMaskUI_get_materialForRendering_m1E481305FA17C6A7AC2A91C9A8BC62CBA40EB21A,
@@ -201,7 +213,7 @@ static Il2CppTokenAdjustorThunkPair s_adjustorThunks[1] =
 {
 	{ 0x06000030, Goal__ctor_m1545B6E40E910D8B0648797BF96520F84FF2FF40_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[93] = 
+static const int32_t s_InvokerIndices[99] = 
 {
 	15126,
 	11628,
@@ -282,6 +294,12 @@ static const int32_t s_InvokerIndices[93] =
 	15321,
 	15321,
 	15321,
+	15321,
+	15321,
+	15321,
+	15321,
+	11628,
+	15321,
 	26417,
 	15321,
 	15126,
@@ -301,7 +319,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	93,
+	99,
 	s_methodPointers,
 	1,
 	s_adjustorThunks,

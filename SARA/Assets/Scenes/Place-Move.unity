@@ -421,7 +421,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2175295913365882555, guid: 864dc454724c2ad4b95a66862738310e,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1073364256}
+      addedObject: {fileID: 1073364255}
   m_SourcePrefab: {fileID: 100100000, guid: 864dc454724c2ad4b95a66862738310e, type: 3}
 --- !u!1 &613527194 stripped
 GameObject:
@@ -435,7 +435,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 613527193}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1073364256
+--- !u!114 &1073364255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -444,11 +444,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 613527194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0150f0316550e4d48b2f681e884be0c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 97c7ee3145b385146ad567e45d10f22b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rotate
-  targetObject: {fileID: 613527194}
-  rotationSpeed: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleDragRotate
+  rotationSpeed: 0.2
 --- !u!1 &1167446570
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +979,6 @@ GameObject:
   - component: {fileID: 2512387470422636671}
   - component: {fileID: 2512387470422636670}
   - component: {fileID: 2512387470422636672}
-  - component: {fileID: 2512387470422636673}
   m_Layer: 0
   m_Name: XR Origin (AR Rig)
   m_TagString: Untagged
@@ -1038,20 +1036,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AnchorPrefab: {fileID: 0}
---- !u!114 &2512387470422636673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2512387470422636669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0150f0316550e4d48b2f681e884be0c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Rotate
-  targetObject: {fileID: 613527194}
-  rotationSpeed: 0.5
 --- !u!4 &2512387470860572925
 Transform:
   m_ObjectHideFlags: 0
