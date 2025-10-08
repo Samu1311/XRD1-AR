@@ -1,7 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem; 
+using TouchControl = UnityEngine.InputSystem.Controls.TouchControl;
 
-public class RotateNewInput : MonoBehaviour
+public class Rotate : MonoBehaviour
 {
     [Header("Rotation Speeds")]
     public float rotationSpeedY = 3f;   // twisting left/right
@@ -9,42 +10,44 @@ public class RotateNewInput : MonoBehaviour
 
     private float lastAngle;
     private Vector2 lastMidpoint;
+    private bool initialized = false;
 
     void Update()
     {
-        if (Touchscreen.current == null) return;
+        // Ensure touchscreen exists (device has a touchscreen)
+        if (Touchscreen.current == null)
+            return;
+
         var touches = Touchscreen.current.touches;
+        var activeTouches = new System.Collections.Generic.List<TouchControl>();
 
-        // We need exactly two active touches
-        int activeCount = 0;
-        TouchControl t0 = null;
-        TouchControl t1 = null;
-
+        // Collect pressed touches
         foreach (var t in touches)
         {
             if (t.press.isPressed)
-            {
-                if (activeCount == 0) t0 = t;
-                else if (activeCount == 1) t1 = t;
-                activeCount++;
-            }
+                activeTouches.Add(t);
         }
 
-        if (activeCount < 2)
+        if (activeTouches.Count < 2)
+        {
+            initialized = false;
             return;
+        }
 
-        Vector2 pos0 = t0.position.ReadValue();
-        Vector2 pos1 = t1.position.ReadValue();
+        // Read positions
+        Vector2 pos0 = activeTouches[0].position.ReadValue();
+        Vector2 pos1 = activeTouches[1].position.ReadValue();
 
+        // Compute midpoint and twist angle
         Vector2 midpoint = (pos0 + pos1) * 0.5f;
         Vector2 dir = pos1 - pos0;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        // Use pressure start as 'began'
-        if (t0.delta.ReadValue() == Vector2.zero || t1.delta.ReadValue() == Vector2.zero)
+        if (!initialized)
         {
             lastAngle = angle;
             lastMidpoint = midpoint;
+            initialized = true;
             return;
         }
 
