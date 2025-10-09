@@ -6,13 +6,13 @@ This week, the team continued refining and integrating use case functionalities 
 ## 2. Progress 💻
 Each member made significant strides in their assigned areas:
 
-**Samuele & Alejandro – QR Code, Model Loading & Rotation
+Samuele & Alejandro – QR Code, Model Loading & Rotation
 Samuele and Alejandro successfully merged Alejandro’s branch into the main project and resolved all related issues. Together, they achieved a major milestone: the 3D model now spawns on the detected QR code, follows the QR code’s movement, and rotates smoothly around a pivot. This represents a key step toward having a fully interactive AR scene.
 
-**Eliza – Annotations & Interactions
+Eliza – Annotations & Interactions
 Eliza made excellent progress by fine-tuning the pulsing speed of the hotspots, ensuring they now pulse at a smooth, visually appealing rate. She also made the hotspots circular and responsive to user touch, adding an important layer of interactivity. Her next focus will be implementing the functionality where, upon tapping a hotspot, it expands to show a detailed description of the selected body part.
 
-**Ginta – Touch Interactions
+Ginta – Touch Interactions
 Ginta spent the week working on getting touch functionality to register properly in Unity. While the issue persists, she is actively debugging the problem and verifying her code and input settings to ensure proper detection of touch gestures.
 
 ## 3. Challenges ⚙️
