@@ -14,7 +14,7 @@ public class SkullAnnotationAnchor : MonoBehaviour
     // Editor gizmo so we can see anchors
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.lightBlue;
         Gizmos.DrawSphere(transform.position, 0.003f);
     }
 }
