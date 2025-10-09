@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 using TouchControl = UnityEngine.InputSystem.Controls.TouchControl;
 
 public class Rotate : MonoBehaviour
 {
     [Header("Rotation Speeds")]
-    public float rotationSpeedY = 3f;   // twisting left/right
+    public float rotationSpeedY = 0.5f;   // twisting left/right
     public float rotationSpeedX = 0.5f; // tilting up/down
 
     private float lastAngle;

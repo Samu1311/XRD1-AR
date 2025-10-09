@@ -84,14 +84,18 @@ extern void U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_Reset_m1
 extern void U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_get_Current_m32915AC988ADACC69CBD8486A12AF1B0F2CBAC4B (void);
 extern void Rotate_Update_m73D585515036D9B7AAD8336BFB8567283CE4C7E7 (void);
 extern void Rotate__ctor_m0EE5CC8EB699542BFC438DC3D547D39E442E9EE4 (void);
+extern void RotateAndZoomPivot_Awake_mFA1B65C41EC031262907E8E39C81DC68E836D917 (void);
+extern void RotateAndZoomPivot_Update_m68A36BECD58CDB8EF5B3238489BE9FEFE273B0A2 (void);
+extern void RotateAndZoomPivot_SmoothApply_mB15F8D7882DBC9DA690658B56431BFB13DC55051 (void);
+extern void RotateAndZoomPivot_ApplyTransformsImmediate_m26808854C46B999FBC6DE726A56B2AF9AB85DDD7 (void);
+extern void RotateAndZoomPivot_ResetToDefault_mC74479F2F9B0A6ADDDCFC83CF9AA17D698BD231B (void);
+extern void RotateAndZoomPivot_SetTrackingState_m70F2AD5D425189E2E72C9DF56EDA7C1DD77FC6A1 (void);
+extern void RotateAndZoomPivot__ctor_m8E37FDF5037F2B9CB5178ED72287557B8A902616 (void);
+extern void Zoom_Start_mD8D8252E97A8FF34ACE6FD12B5BBE81C5D19406C (void);
+extern void Zoom_Update_m3D5AFFECB27EA4D0EE42C11666C1D6A694601A2D (void);
+extern void Zoom__ctor_mBAA888A8925DB3AD0823BE2DA733AFB386757A3D (void);
 extern void SceneTemplate_RotateCube_Update_mAF2FB34B99E325443A80D60A7EB73DC092EAE9A6 (void);
 extern void SceneTemplate_RotateCube__ctor_mC7E11C05D25FFF6F8D7EA06AAE5598B497365CD2 (void);
-extern void SimpleDragRotate_Start_m386284A20DE515D0BF1434E5A60B8DAD16F683FC (void);
-extern void SimpleDragRotate_CreateDebugUI_mAC7B0B816CA94899CB919D8A74435C67ED9565DE (void);
-extern void SimpleDragRotate_Update_m93C66D8AFDFB051E22850C06F7C24B63D82AD478 (void);
-extern void SimpleDragRotate_HandleMouseRotation_mBC155A49453BF28AB1F030A94BEF21AF70114E5F (void);
-extern void SimpleDragRotate_UpdateDebugText_m2F208039B39DE74AA38832E2F027FA4E273002A8 (void);
-extern void SimpleDragRotate__ctor_mA5DED3E2ECC7F2BE36C012CB834B2F4C3683B5D7 (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033 (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1 (void);
 extern void CutoutMaskUI_get_materialForRendering_m1E481305FA17C6A7AC2A91C9A8BC62CBA40EB21A (void);
@@ -106,7 +110,7 @@ extern void ARFeatheredPlaneMeshVisualizerCompanion_OnDestroy_m64B601920050D7584
 extern void ARFeatheredPlaneMeshVisualizerCompanion_Update_m541F58E1FC27F7D775FE47F2C1B1A04710BC4A27 (void);
 extern void ARFeatheredPlaneMeshVisualizerCompanion_set_visualizeSurfaces_m7A7F198C97A315F6F7F58F0BDA5269863F098D68 (void);
 extern void ARFeatheredPlaneMeshVisualizerCompanion__ctor_m3871FAD2A1135D983A9B5ADCD604F22949DE985C (void);
-static Il2CppMethodPointer s_methodPointers[99] = 
+static Il2CppMethodPointer s_methodPointers[103] = 
 {
 	ARTemplateMenuManager_get_createButton_mF094F0AC7A89F9C92C57D8517519509825A145E4,
 	ARTemplateMenuManager_set_createButton_mD65905DD827D87E747095FDAF9CE38892C4340EB,
@@ -185,14 +189,18 @@ static Il2CppMethodPointer s_methodPointers[99] =
 	U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_get_Current_m32915AC988ADACC69CBD8486A12AF1B0F2CBAC4B,
 	Rotate_Update_m73D585515036D9B7AAD8336BFB8567283CE4C7E7,
 	Rotate__ctor_m0EE5CC8EB699542BFC438DC3D547D39E442E9EE4,
+	RotateAndZoomPivot_Awake_mFA1B65C41EC031262907E8E39C81DC68E836D917,
+	RotateAndZoomPivot_Update_m68A36BECD58CDB8EF5B3238489BE9FEFE273B0A2,
+	RotateAndZoomPivot_SmoothApply_mB15F8D7882DBC9DA690658B56431BFB13DC55051,
+	RotateAndZoomPivot_ApplyTransformsImmediate_m26808854C46B999FBC6DE726A56B2AF9AB85DDD7,
+	RotateAndZoomPivot_ResetToDefault_mC74479F2F9B0A6ADDDCFC83CF9AA17D698BD231B,
+	RotateAndZoomPivot_SetTrackingState_m70F2AD5D425189E2E72C9DF56EDA7C1DD77FC6A1,
+	RotateAndZoomPivot__ctor_m8E37FDF5037F2B9CB5178ED72287557B8A902616,
+	Zoom_Start_mD8D8252E97A8FF34ACE6FD12B5BBE81C5D19406C,
+	Zoom_Update_m3D5AFFECB27EA4D0EE42C11666C1D6A694601A2D,
+	Zoom__ctor_mBAA888A8925DB3AD0823BE2DA733AFB386757A3D,
 	SceneTemplate_RotateCube_Update_mAF2FB34B99E325443A80D60A7EB73DC092EAE9A6,
 	SceneTemplate_RotateCube__ctor_mC7E11C05D25FFF6F8D7EA06AAE5598B497365CD2,
-	SimpleDragRotate_Start_m386284A20DE515D0BF1434E5A60B8DAD16F683FC,
-	SimpleDragRotate_CreateDebugUI_mAC7B0B816CA94899CB919D8A74435C67ED9565DE,
-	SimpleDragRotate_Update_m93C66D8AFDFB051E22850C06F7C24B63D82AD478,
-	SimpleDragRotate_HandleMouseRotation_mBC155A49453BF28AB1F030A94BEF21AF70114E5F,
-	SimpleDragRotate_UpdateDebugText_m2F208039B39DE74AA38832E2F027FA4E273002A8,
-	SimpleDragRotate__ctor_mA5DED3E2ECC7F2BE36C012CB834B2F4C3683B5D7,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1,
 	CutoutMaskUI_get_materialForRendering_m1E481305FA17C6A7AC2A91C9A8BC62CBA40EB21A,
@@ -213,7 +221,7 @@ static Il2CppTokenAdjustorThunkPair s_adjustorThunks[1] =
 {
 	{ 0x06000030, Goal__ctor_m1545B6E40E910D8B0648797BF96520F84FF2FF40_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[99] = 
+static const int32_t s_InvokerIndices[103] = 
 {
 	15290,
 	11757,
@@ -297,14 +305,18 @@ static const int32_t s_InvokerIndices[99] =
 	15489,
 	15489,
 	15489,
+	11562,
 	15489,
-	11757,
 	15489,
-	26678,
+	15489,
+	15489,
+	15489,
+	15489,
+	26679,
 	15489,
 	15290,
 	15489,
-	26640,
+	26641,
 	15290,
 	11757,
 	15390,
@@ -319,7 +331,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	99,
+	103,
 	s_methodPointers,
 	1,
 	s_adjustorThunks,
