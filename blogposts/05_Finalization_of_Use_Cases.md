@@ -1,4 +1,4 @@
-# AR Biology Visualizer (SARA) – Blogpost 5
+# 🧬 AR Biology Visualizer (SARA) – Almost there...!
 
 ## 1. Focus 🧠
 This week, the team continued refining and integrating use case functionalities for the SARA AR application. With several major technical hurdles now overcome, development shifted toward improving interactivity and combining separate features into a unified, working AR experience.
