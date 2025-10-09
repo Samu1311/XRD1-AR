@@ -116,7 +116,9 @@
           },
           {
             "name": "ComputeShader",
-            "scenes": [],
+            "scenes": [
+              "Assets/Scenes/Place-Move.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
@@ -390,6 +392,12 @@
             "name": "ShaderNameRegistry",
             "scenes": [],
             "dependencyType": 1,
+            "icon": null
+          },
+          {
+            "name": "ShaderVariantCollection",
+            "scenes": [],
+            "dependencyType": 0,
             "icon": null
           },
           {
