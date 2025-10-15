@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TouchControl = UnityEngine.InputSystem.Controls.TouchControl;
 
 public class Zoom : MonoBehaviour
 {
@@ -38,45 +39,76 @@ public class Zoom : MonoBehaviour
         }
 
         var touches = Touchscreen.current.touches;
-        int count = 0;
-        Vector2 pos1 = Vector2.zero, pos2 = Vector2.zero;
+        int activeCount = 0;
+        Vector2 p0 = Vector2.zero, p1 = Vector2.zero;
+        TouchControl touch0 = null, touch1 = null;
 
-        foreach (var touch in touches)
+        foreach (var t in touches)
         {
-            if (touch.press.isPressed)
+            if (t.press.isPressed)
             {
-                if (count == 0) pos1 = touch.position.ReadValue();
-                else if (count == 1) pos2 = touch.position.ReadValue();
-                count++;
-                if (count >= 2) break;
+                if (activeCount == 0)
+                {
+                    p0 = t.position.ReadValue();
+                    touch0 = t;
+                }
+                else if (activeCount == 1)
+                {
+                    p1 = t.position.ReadValue();
+                    touch1 = t;
+                }
+                if (++activeCount >= 2) break;
             }
         }
 
-        if (count == 2)
+        if (activeCount == 2)
         {
-            float theDistance = Vector2.Distance(pos1, pos2);
+            float pinchDistance = Vector2.Distance(p0, p1);
 
             if (!isPinching)
             {
-                // check if this is the object we should grab
+                // Check if this is the object we should grab
                 if (activeObject == null)
                 {
-                    Vector2 midpoint = (pos1 + pos2) * 0.5f;
+                    Vector2 midpoint = (p0 + p1) * 0.5f;
                     if (IsTouchingThis(midpoint))
                     {
                         activeObject = this;
-                        lastPinchDistance = theDistance;
+                        lastPinchDistance = pinchDistance;
                         isPinching = true;
                     }
                 }
             }
             else if (activeObject == this)
             {
-                float change = theDistance - lastPinchDistance;
-                lastPinchDistance = theDistance;
+                // Check if both touches are still active (moved phase)
+                var phase0 = touch0.phase.ReadValue();
+                var phase1 = touch1.phase.ReadValue();
 
-                targetScale *= 1f + (change * pinchSpeed);
-                targetScale = Mathf.Clamp(targetScale, minScale, maxScale);
+                if (phase0 == UnityEngine.InputSystem.TouchPhase.Moved ||
+                    phase1 == UnityEngine.InputSystem.TouchPhase.Moved ||
+                    phase0 == UnityEngine.InputSystem.TouchPhase.Stationary ||
+                    phase1 == UnityEngine.InputSystem.TouchPhase.Stationary)
+                {
+                    float pinchDelta = pinchDistance - lastPinchDistance;
+                    lastPinchDistance = pinchDistance;
+
+                    float newScale = targetScale * (1f + pinchDelta * pinchSpeed);
+                    targetScale = Mathf.Clamp(newScale, minScale, maxScale);
+                }
+
+                // end pinching if either touch ended or was canceled
+                if (phase0 == UnityEngine.InputSystem.TouchPhase.Ended ||
+                    phase0 == UnityEngine.InputSystem.TouchPhase.Canceled ||
+                    phase1 == UnityEngine.InputSystem.TouchPhase.Ended ||
+                    phase1 == UnityEngine.InputSystem.TouchPhase.Canceled)
+                {
+                    if (activeObject == this)
+                    {
+                        activeObject = null;
+                    }
+                    isPinching = false;
+                }
             }
         }
         else
