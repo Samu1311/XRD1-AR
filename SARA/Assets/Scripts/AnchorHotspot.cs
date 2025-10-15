@@ -58,17 +58,32 @@ public class AnchorHotspot : MonoBehaviour, IPointerClickHandler
         UpdateWorldPosition();
 
         // Billboard + pulse
+        // Orient hotspot to lie on skull surface instead of facing camera
         if (visual)
         {
-            visual.LookAt(cam.transform);
-            visual.Rotate(0f, 180f, 0f);
+            // Determine outward direction (same as anchor normal)
+            Vector3 outward;
+            if (anchor.outwardHint != Vector3.zero)
+                outward = anchor.outwardHint.normalized;
+            else
+                outward = (anchor.transform.position - cam.transform.position).normalized;
 
-            // Slower, period-based pulse (smooth in/out)
+            // Set the hotspot's forward to match skull surface
+            visual.rotation = Quaternion.LookRotation(outward, Vector3.up);
+
+            // Optional: make it slightly tilt toward camera (adds visibility)
+            visual.rotation = Quaternion.Slerp(
+                Quaternion.LookRotation(outward, Vector3.up),
+                Quaternion.LookRotation((cam.transform.position - transform.position).normalized, Vector3.up),
+                0.15f); // 0 = full flat, 1 = full billboard
+
+            // Keep the pulsing animation
             float t = Mathf.Sin((Mathf.PI * 2f) * (Time.time / Mathf.Max(0.01f, pulsePeriod)));
             t = (t * 0.5f) + 0.5f; // 0..1
             float s = 1f + Mathf.Lerp(0f, pulseAmount, t);
             visual.localScale = Vector3.one * s;
         }
+
 
         // --- Debounced visibility (prevents fast blinking from occlusion jitter) ---
         bool nowDesired = !label.opened && IsVisibleToCamera();
@@ -127,10 +142,11 @@ public class AnchorHotspot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!label) return;
-        label.Open();
+        if (!label || !anchor) return;
+
+        label.Open(anchor);   // <— IMPORTANT: pass which part was clicked
         SetActive(false);
-        _appliedVisible = false;  // keep internal state consistent
+        _appliedVisible = false;
         _desiredVisible = false;
         _stateChangedAt = Time.time;
     }

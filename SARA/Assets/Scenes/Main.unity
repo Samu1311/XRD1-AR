@@ -164,6 +164,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkullAnnotationAnchor
   title: Parietal Bone
+  description: The parietal part of the skull is formed by two flat, quadrilateral
+    bones that make up the sides and roof of the cranium. These bones are located
+    superiorly and laterally, meeting at the top along the sagittal suture and articulating
+    with the frontal, occipital, temporal, and sphenoid bones. The parietal bones
+    protect the brain, and their internal surface shows grooves for blood vessels,
+    while their external surface may show markings from the temporal muscles.
   labelOutOffset: 0.15
   outwardHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97373745
@@ -211,6 +217,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkullAnnotationAnchor
   title: Frontal Bone
+  description: The frontal bone forms the forehead and upper part of the face, consisting
+    of the squamous part (the large, flat portion of the forehead) and the orbital
+    part (which forms the roof of the eye sockets and part of the nasal cavity).
+    It is a single, unpaired, flat bone in adults that protects the brain and connects
+    to other skull bones like the nasal, zygomatic, and ethmoid bones.
   labelOutOffset: 0.15
   outwardHint: {x: 0, y: 0, z: 0}
 --- !u!1 &250814148
@@ -475,6 +486,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkullAnnotationAnchor
   title: Nasal Bone
+  description: The nasal part of the skull includes the nasal bones, the nasal part
+    of the frontal bone, and other bones contributing to the nasal cavity and bridge.
+    The nasal bones are two small, paired bones that form the bridge of the nose.
+    The nasal part of the frontal bone projects down between the supraorbital margins
+    to articulate with the nasal bones and the maxillae, supporting the nasal bridge
+    with a structure called the nasal spine.
   labelOutOffset: 0.15
   outwardHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &613527193
@@ -953,6 +970,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkullAnnotationAnchor
   title: Jaw
+  description: The jaw is composed of the mandible (lower jaw) and maxilla (upper
+    jaw) and is crucial for facial structure, protecting the brain, and enabling
+    essential functions like chewing, speaking, and expression. The mandible is the
+    largest, strongest, and only movable bone of the skull, connecting to the temporal
+    bones via the temporomandibular joints (TMJ). The maxilla is fixed, forms the
+    upper jaw, and contributes to the orbits and nasal cavity.
   labelOutOffset: 0.15
   outwardHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1916270978 stripped
@@ -1018,6 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkullAnnotationAnchor
   title: Temporal Bone
+  description: Detailed explanation of this bone or feature.
   labelOutOffset: 0.15
   outwardHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2512387468973847745

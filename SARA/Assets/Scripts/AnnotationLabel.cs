@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;   // for LayoutRebuilder
 
 [RequireComponent(typeof(Canvas))]
 [RequireComponent(typeof(LineRenderer))]
@@ -8,8 +9,10 @@ public class AnnotationLabel : MonoBehaviour
     public SkullAnnotationAnchor target;
     public Camera cam;
     public LayerMask occlusionMask;
-    public RectTransform panel;
-    public TextMeshProUGUI text;
+
+    // Assign in prefab:
+    public RectTransform panel;      // Background (Image) RectTransform
+    public TextMeshProUGUI text;     // TMP text inside Background
 
     [Header("Tuning")]
     public float raycastSkin = 0.005f;
@@ -18,6 +21,7 @@ public class AnnotationLabel : MonoBehaviour
     public Vector2 screenOffset = new Vector2(0.2f, 0.08f);
 
     [HideInInspector] public bool opened = false;
+    [HideInInspector] public bool expanded = false;
 
     Canvas canvas;
     LineRenderer line;
@@ -37,9 +41,13 @@ public class AnnotationLabel : MonoBehaviour
         if (line.widthMultiplier <= 0f) line.widthMultiplier = 0.0035f;
         line.widthCurve = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
 
-        if (text && target) text.text = target.title;
+        // TMP 3.x wrapping/overflow defaults
+        if (text)
+        {
+            text.textWrappingMode = TextWrappingModes.Normal;
+            text.overflowMode = TextOverflowModes.Overflow; // or Truncate if you prefer
+        }
 
-        // start hidden
         SetVisible(false);
     }
 
@@ -49,18 +57,81 @@ public class AnnotationLabel : MonoBehaviour
         cam = c ? c : Camera.main;
         occlusionMask = mask;
         canvas.worldCamera = cam;
-        if (text && target) text.text = target.title;
         SetVisible(false);
     }
 
-    public void Open() { opened = true; }
-    public void Close() { opened = false; SetVisible(false); }
+    // -------- Public open/close & click --------
+    public void Open(SkullAnnotationAnchor t)
+    {
+        // Close other labels so only one stays open
+        foreach (var l in FindObjectsOfType<AnnotationLabel>())
+            if (l != this) l.Close();
 
+        target = t;
+        opened = true;
+        expanded = false; // start collapsed (title only)
+        ApplyTitleOnly();
+    }
+
+    public void Open() => Open(target);
+
+    public void OnLabelClick()
+    {
+        if (!opened || !target || !text) return;
+
+        expanded = !expanded;
+        if (expanded) ApplyTitleAndDescription();
+        else ApplyTitleOnly();
+    }
+
+    public void Close()
+    {
+        opened = false;
+        expanded = false;
+        SetVisible(false);
+    }
+
+    // -------- Text & layout helpers --------
+    void ApplyTitleOnly()
+    {
+        if (!text || !target) return;
+        text.textWrappingMode = TextWrappingModes.Normal;
+        text.overflowMode = TextOverflowModes.Overflow;
+        text.text = $"<b>{target.title}</b>";
+        RefreshLayout();
+    }
+
+    void ApplyTitleAndDescription()
+    {
+        if (!text || !target) return;
+        text.textWrappingMode = TextWrappingModes.Normal;
+        text.overflowMode = TextOverflowModes.Overflow;
+        text.text = $"<b>{target.title}</b>\n\n{target.description}";
+        RefreshLayout();
+    }
+
+    void RefreshLayout()
+    {
+        if (!panel) return;
+
+        // Immediate rebuild (World Space canvases often need this)
+        LayoutRebuilder.ForceRebuildLayoutImmediate(panel);
+
+        // And once next frame to catch late layout changes
+        StopAllCoroutines();
+        StartCoroutine(DelayedRebuild());
+    }
+
+    System.Collections.IEnumerator DelayedRebuild()
+    {
+        yield return null; // next frame
+        if (panel) LayoutRebuilder.ForceRebuildLayoutImmediate(panel);
+    }
+
+    // -------- Update positioning/visibility --------
     void LateUpdate()
     {
         if (!target || !cam) { SetVisible(false); return; }
-
-        // Only consider drawing if user opened it
         if (!opened) { SetVisible(false); return; }
 
         // Occlusion & on-screen
@@ -77,10 +148,15 @@ public class AnnotationLabel : MonoBehaviour
         SetVisible(visible);
         if (!visible) return;
 
-        // Position label next to the skull
-        Vector3 outward = (target.outwardHint.sqrMagnitude > 0.0001f ? target.outwardHint : (cam.transform.position - target.transform.position)).normalized;
+        // Position label
+        Vector3 outward = (target.outwardHint.sqrMagnitude > 0.0001f
+            ? target.outwardHint
+            : (cam.transform.position - target.transform.position)).normalized;
+
         Vector3 anchorPos = target.transform.position;
-        Vector3 labelPos = anchorPos + outward * target.labelOutOffset + cam.transform.right * screenOffset.x + cam.transform.up * screenOffset.y;
+        Vector3 labelPos = anchorPos + outward * target.labelOutOffset
+                         + cam.transform.right * screenOffset.x
+                         + cam.transform.up * screenOffset.y;
 
         desiredPos = Vector3.Lerp(transform.position, labelPos, 1f - Mathf.Exp(-smooth * Time.deltaTime));
         transform.position = desiredPos;
@@ -90,10 +166,12 @@ public class AnnotationLabel : MonoBehaviour
 
         Vector3 lineStart = anchorPos + outward * lineStartOffset;
         line.SetPosition(0, lineStart);
-        Vector3 lineEnd = panel ? panel.TransformPoint(new Vector3(-panel.rect.width * 0.5f, 0f, 0f)) : transform.position;
-        line.SetPosition(1, lineEnd);
 
-        if (text && text.text != target.title) text.text = target.title;
+        Vector3 lineEnd = panel
+            ? panel.TransformPoint(new Vector3(-panel.rect.width * 0.5f, 0f, 0f))
+            : transform.position;
+
+        line.SetPosition(1, lineEnd);
     }
 
     void SetVisible(bool on)
