@@ -23,7 +23,7 @@ public class Zoom : MonoBehaviour
 
     private static Zoom activeObject = null;
 
-    void Start()
+    void Awake()
     {
         originalScale = transform.localScale;
         cam = Camera.main;
@@ -41,12 +41,12 @@ public class Zoom : MonoBehaviour
         int count = 0;
         Vector2 pos1 = Vector2.zero, pos2 = Vector2.zero;
 
-        foreach (var t in touches)
+        foreach (var touch in touches)
         {
-            if (t.press.isPressed)
+            if (touch.press.isPressed)
             {
-                if (count == 0) pos1 = t.position.ReadValue();
-                else if (count == 1) pos2 = t.position.ReadValue();
+                if (count == 0) pos1 = touch.position.ReadValue();
+                else if (count == 1) pos2 = touch.position.ReadValue();
                 count++;
                 if (count >= 2) break;
             }
@@ -54,7 +54,7 @@ public class Zoom : MonoBehaviour
 
         if (count == 2)
         {
-            float dist = Vector2.Distance(pos1, pos2);
+            float theDistance = Vector2.Distance(pos1, pos2);
 
             if (!isPinching)
             {
@@ -65,15 +65,15 @@ public class Zoom : MonoBehaviour
                     if (IsTouchingThis(midpoint))
                     {
                         activeObject = this;
-                        lastPinchDistance = dist;
+                        lastPinchDistance = theDistance;
                         isPinching = true;
                     }
                 }
             }
             else if (activeObject == this)
             {
-                float change = dist - lastPinchDistance;
-                lastPinchDistance = dist;
+                float change = theDistance - lastPinchDistance;
+                lastPinchDistance = theDistance;
 
                 targetScale *= 1f + (change * pinchSpeed);
                 targetScale = Mathf.Clamp(targetScale, minScale, maxScale);
