@@ -1,97 +1,104 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Zoom : MonoBehaviour
 {
     [Header("Zoom Settings")]
-    public float zoomSpeed = 0.05f;
+    public float pinchSpeed = 0.003f;
     public float minScale = 0.5f;
     public float maxScale = 3.0f;
-
-    [Header("Activation Settings")]
-    public bool requireObjectActive = true;
-    public float activationDelay = 0.5f;
+    public float smoothTime = 0.08f;
 
     [Header("Debug")]
     public bool enableDebug = true;
 
-    private Vector3 initialScale;
-    private float previousDistance = 0f;
-    private bool isZoomEnabled = false;
-    private bool isThisObjectSelected = false;
-    private float timeObjectBecameActive = 0f;
-    private Camera arCamera;
+    private Vector3 originalScale;
+    private float currentScale = 1f;
+    private float targetScale = 1f;
+    private float scaleVelocity = 0f;
+
+    private bool isPinching = false;
+    private float lastPinchDistance = 0f;
+    private Camera cam;
+
+    private static Zoom activeObject = null;
 
     void Start()
     {
-        initialScale = transform.localScale;
-    }
-
-    void OnEnable()
-    {
-        isZoomEnabled = false;
-        timeObjectBecameActive = Time.time;
+        originalScale = transform.localScale;
+        cam = Camera.main;
     }
 
     void Update()
     {
-        if (requireObjectActive && !isZoomEnabled)
+        if (Touchscreen.current == null)
         {
-            if (Time.time >= timeObjectBecameActive + activationDelay)
-            {
-                isZoomEnabled = true;
-            }
-
+            ZoomSmooth();
+            return;
         }
 
-        if (Input.touchCount == 2)
+        var touches = Touchscreen.current.touches;
+        int count = 0;
+        Vector2 pos1 = Vector2.zero, pos2 = Vector2.zero;
+
+        foreach (var t in touches)
         {
-            Touch touch0 = Input.GetTouch(0);
-            Touch touch1 = Input.GetTouch(1);
-
-            if (touch0.phase == TouchPhase.Began || touch1.phase == TouchPhase.Began)
+            if (t.press.isPressed)
             {
-                Vector2 midpoint = (touch0.position + touch1.position) / 2f;
-                isThisObjectSelected = IsTouchingThisObject(midpoint);
+                if (count == 0) pos1 = t.position.ReadValue();
+                else if (count == 1) pos2 = t.position.ReadValue();
+                count++;
+                if (count >= 2) break;
+            }
+        }
 
-                if (isThisObjectSelected)
+        if (count == 2)
+        {
+            float dist = Vector2.Distance(pos1, pos2);
+
+            if (!isPinching)
+            {
+                // check if this is the object we should grab
+                if (activeObject == null)
                 {
-                    previousDistance = Vector2.Distance(touch0.position, touch1.position);
+                    Vector2 midpoint = (pos1 + pos2) * 0.5f;
+                    if (IsTouchingThis(midpoint))
+                    {
+                        activeObject = this;
+                        lastPinchDistance = dist;
+                        isPinching = true;
+                    }
                 }
             }
-            else if (isThisObjectSelected && (touch0.phase == TouchPhase.Moved || touch1.phase == TouchPhase.Moved))
+            else if (activeObject == this)
             {
-                float currentDistance = Vector2.Distance(touch0.position, touch1.position);
+                float change = dist - lastPinchDistance;
+                lastPinchDistance = dist;
 
-                if (previousDistance > 0)
-                {
-                    float deltaDistance = currentDistance - previousDistance;
-                    float scaleMultiplier = 1f + (deltaDistance * zoomSpeed * 0.01f);
-                    Vector3 newScale = transform.localScale * scaleMultiplier;
-
-                    float currentScaleFactor = newScale.x / initialScale.x;
-                    currentScaleFactor = Mathf.Clamp(currentScaleFactor, minScale, maxScale);
-
-                    transform.localScale = initialScale * currentScaleFactor;
-
-                    previousDistance = currentDistance;
-                }
+                targetScale *= 1f + (change * pinchSpeed);
+                targetScale = Mathf.Clamp(targetScale, minScale, maxScale);
             }
         }
         else
         {
-            previousDistance = 0f;
-            isThisObjectSelected = false;
+            if (activeObject == this)
+            {
+                activeObject = null;
+            }
+            isPinching = false;
         }
+
+        ZoomSmooth();
     }
 
-    private bool IsTouchingThisObject(Vector2 touchPosition)
+    bool IsTouchingThis(Vector2 screenPos)
     {
-        if (arCamera == null) return false;
+        if (cam == null) return false;
 
-        Ray ray = arCamera.ScreenPointToRay(touchPosition);
+        Ray ray = cam.ScreenPointToRay(screenPos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit))
         {
             return hit.transform == transform || hit.transform.IsChildOf(transform);
         }
@@ -99,8 +106,17 @@ public class Zoom : MonoBehaviour
         return false;
     }
 
+    // make it smooooooth 
+    void ZoomSmooth()
+    {
+        currentScale = Mathf.SmoothDamp(currentScale, targetScale, ref scaleVelocity, smoothTime);
+        transform.localScale = originalScale * currentScale;
+    }
+
     public void ResetScale()
     {
-        transform.localScale = initialScale;
+        targetScale = 1f;
+        currentScale = 1f;
+        transform.localScale = originalScale;
     }
 }
