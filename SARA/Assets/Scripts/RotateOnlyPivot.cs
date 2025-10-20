@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 using TouchControl = UnityEngine.InputSystem.Controls.TouchControl;
 #endif
 
-public class RotateAndZoomPivot : MonoBehaviour
+public class RotateOnlyPivot : MonoBehaviour
 {
-    [Header("Assign the mesh to scale (your *Model child)")]
+    [Header("Assign the mesh to rotate (your *Model child)")]
     public Transform targetModel;   // MUST be assigned (SkullModel/KidneyModel)
 
     [Header("Rotation (one-finger drag)")]
@@ -15,12 +15,6 @@ public class RotateAndZoomPivot : MonoBehaviour
     public float pitchSpeed = 0.10f;  // deg per px vertical
     public float minPitch = -80f;
     public float maxPitch = 80f;
-
-    [Header("Zoom (two-finger pinch)")]
-    public float pinchSpeed = 0.0025f;   // scale per px of pinch delta
-    public float minScale = 0.10f;       // relative to baseline
-    public float maxScale = 2.00f;       // relative to baseline
-    public float initialScale = 1.00f;   // relative to baseline (1 = authored size)
 
     [Header("Smoothing")]
     public float smoothTime = 0.05f;
@@ -31,17 +25,12 @@ public class RotateAndZoomPivot : MonoBehaviour
     private Color[] _origEmissionColors;
 
     // State
-    private bool rotating, pinching, isTracking = true;
+    private bool rotating;
+    private bool isTracking = true;
     private Vector2 lastFingerPos;
-    private float lastPinchDist;
 
     private float targetYaw, targetPitch;
     private float yawSmoothed, pitchSmoothed, yawVel, pitchVel;
-
-    // scale relative to authored baseline
-    private Vector3 baselineScale = Vector3.one;
-    private float targetScaleFactor;
-    private float scaleSmoothed, scaleVel;
 
     private Camera _cam;
 
@@ -49,14 +38,10 @@ public class RotateAndZoomPivot : MonoBehaviour
     {
         if (targetModel == null)
         {
-            Debug.LogError("[RotateAndZoomPivot] Please assign targetModel (your mesh child).");
+            Debug.LogError("[RotateOnlyPivot] Please assign targetModel (your mesh child).");
             enabled = false;
             return;
         }
-
-        baselineScale = targetModel.localScale;
-        targetScaleFactor = Mathf.Clamp(initialScale, minScale, maxScale);
-        scaleSmoothed = targetScaleFactor;
 
         _cam = Camera.main;
 
@@ -86,10 +71,9 @@ public class RotateAndZoomPivot : MonoBehaviour
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
         if (Touchscreen.current == null) { SmoothApply(); return; }
 
-        // Gather up to two touches (new Input System)
         var touches = Touchscreen.current.touches;
         int count = 0;
-        Vector2 p0 = Vector2.zero, p1 = Vector2.zero;
+        Vector2 p0 = Vector2.zero;
         TouchControl firstTouch = null;
 
         foreach (var t in touches)
@@ -97,13 +81,11 @@ public class RotateAndZoomPivot : MonoBehaviour
             if (t.press.isPressed)
             {
                 if (count == 0) { p0 = t.position.ReadValue(); firstTouch = t; }
-                else if (count == 1) p1 = t.position.ReadValue();
                 count++;
-                if (count >= 2) break;
+                if (count >= 1) break;
             }
         }
 
-        // Selection on single-finger Began
         if (count == 1 && firstTouch != null &&
             firstTouch.phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Began)
         {
@@ -119,20 +101,14 @@ public class RotateAndZoomPivot : MonoBehaviour
             }
         }
 #else
-        // Old Input Manager path
         int count = Input.touchCount;
-        Vector2 p0 = Vector2.zero, p1 = Vector2.zero;
-        Touch t0 = default, t1 = default;
+        Vector2 p0 = Vector2.zero;
+        Touch t0 = default;
 
         if (count >= 1)
         {
             t0 = Input.GetTouch(0);
             p0 = t0.position;
-        }
-        if (count >= 2)
-        {
-            t1 = Input.GetTouch(1);
-            p1 = t1.position;
         }
 
         if (count == 1 && t0.phase == TouchPhase.Began)
@@ -150,14 +126,13 @@ public class RotateAndZoomPivot : MonoBehaviour
         }
 #endif
 
-        // Only the ACTIVE controller reacts to gestures
         if (ActivePivotManager.Instance == null || ActivePivotManager.Instance.Active != this)
         {
             SmoothApply();
             return;
         }
 
-        // --- Gestures for active only ---
+        // --- Rotation only ---
         if (count == 1)
         {
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
@@ -184,35 +159,9 @@ public class RotateAndZoomPivot : MonoBehaviour
                 rotating = false;
             }
         }
-        else if (count >= 2)
-        {
-            rotating = false;
-
-            float pinchDist =
-#if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
-                Vector2.Distance(p0, p1);
-#else
-                Vector2.Distance(p0, p1);
-#endif
-
-            if (!pinching)
-            {
-                pinching = true;
-                lastPinchDist = pinchDist;
-            }
-            else
-            {
-                float pinchDelta = pinchDist - lastPinchDist;
-                lastPinchDist = pinchDist;
-
-                float newFactor = targetScaleFactor * (1f + pinchDelta * pinchSpeed);
-                targetScaleFactor = Mathf.Clamp(newFactor, minScale, maxScale);
-            }
-        }
         else
         {
             rotating = false;
-            pinching = false;
         }
 
         SmoothApply();
@@ -220,14 +169,9 @@ public class RotateAndZoomPivot : MonoBehaviour
 
     private void SmoothApply()
     {
-        // rotation smoothing
         yawSmoothed = Mathf.SmoothDampAngle(yawSmoothed, targetYaw, ref yawVel, smoothTime);
         pitchSmoothed = Mathf.SmoothDampAngle(pitchSmoothed, targetPitch, ref pitchVel, smoothTime);
         transform.localRotation = Quaternion.Euler(pitchSmoothed, yawSmoothed, 0f);
-
-        // scale smoothing (relative to baseline)
-        scaleSmoothed = Mathf.SmoothDamp(scaleSmoothed, targetScaleFactor, ref scaleVel, smoothTime);
-        targetModel.localScale = baselineScale * scaleSmoothed;
     }
 
     private void ApplyTransformsImmediate()
@@ -235,12 +179,8 @@ public class RotateAndZoomPivot : MonoBehaviour
         yawSmoothed = targetYaw;
         pitchSmoothed = targetPitch;
         transform.localRotation = Quaternion.Euler(pitchSmoothed, yawSmoothed, 0f);
-
-        scaleSmoothed = targetScaleFactor;
-        targetModel.localScale = baselineScale * scaleSmoothed;
     }
 
-    // Selection via physics raycast (needs a Collider on targetModel or its children)
     bool IsTouchOnThisModel(Vector2 screenPos)
     {
         if (_cam == null || targetModel == null) return false;
@@ -250,12 +190,10 @@ public class RotateAndZoomPivot : MonoBehaviour
         return false;
     }
 
-    // Public API for Reset button & highlight
     public void ResetToDefaultPublic()
     {
         targetYaw = 0f;
         targetPitch = 0f;
-        targetScaleFactor = Mathf.Clamp(initialScale, minScale, maxScale);
     }
 
     public void SetHighlight(bool on)
@@ -270,14 +208,12 @@ public class RotateAndZoomPivot : MonoBehaviour
         }
     }
 
-    // Optional: AR tracking gate
     public void SetTrackingState(bool tracking)
     {
         isTracking = tracking;
         if (!tracking)
         {
             rotating = false;
-            pinching = false;
             ActivePivotManager.Instance?.ClearActive(this);
         }
     }

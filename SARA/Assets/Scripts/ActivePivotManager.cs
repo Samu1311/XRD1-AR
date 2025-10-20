@@ -4,43 +4,72 @@ public class ActivePivotManager : MonoBehaviour
 {
     public static ActivePivotManager Instance { get; private set; }
 
-    // The currently active pivot controller (only this one responds to gestures)
-    public RotateAndZoomPivot Active { get; private set; }
+    // The currently active pivot (can be RotateOnlyPivot or Zoom)
+    private MonoBehaviour activePivot;
 
-    // Optional: visual feedback on selection
     [SerializeField] bool highlightActive = true;
 
     void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
 
-    public void SetActive(RotateAndZoomPivot controller)
+    public void SetActive(MonoBehaviour controller)
     {
-        if (Active == controller) return;
+        if (activePivot == controller) return;
 
-        // turn off highlight on previous
-        if (highlightActive && Active != null) Active.SetHighlight(false);
+        // Disable highlight on previously active object
+        if (highlightActive && activePivot != null)
+            SetHighlight(activePivot, false);
 
-        Active = controller;
+        activePivot = controller;
 
-        // turn on highlight on new
-        if (highlightActive && Active != null) Active.SetHighlight(true);
+        // Enable highlight on new active object
+        if (highlightActive && activePivot != null)
+            SetHighlight(activePivot, true);
     }
 
-    public void ClearActive(RotateAndZoomPivot controller)
+    public void ClearActive(MonoBehaviour controller)
     {
-        if (Active == controller)
+        if (activePivot == controller)
         {
-            if (highlightActive && Active != null) Active.SetHighlight(false);
-            Active = null;
+            if (highlightActive && activePivot != null)
+                SetHighlight(activePivot, false);
+            activePivot = null;
         }
     }
 
-    // Hook this to your UI Reset button
     public void ResetActive()
     {
-        if (Active != null) Active.ResetToDefaultPublic();
+        if (activePivot == null) return;
+
+        if (activePivot is RotateOnlyPivot rotatePivot)
+            rotatePivot.ResetToDefaultPublic();
+        else if (activePivot is Zoom zoomPivot)
+            zoomPivot.ResetScale();
     }
+
+    private void SetHighlight(MonoBehaviour controller, bool on)
+    {
+        if (controller is RotateOnlyPivot rotatePivot)
+            rotatePivot.SetHighlight(on);
+        else if (controller is Zoom zoomPivot)
+        {
+            // Optional: if you want Zoom objects to highlight visually,
+            // you can handle it here (e.g. via a renderer on zoomPivot)
+            var renderer = zoomPivot.GetComponentInChildren<Renderer>();
+            if (renderer != null)
+            {
+                var color = on ? Color.yellow : Color.white;
+                renderer.material.color = color;
+            }
+        }
+    }
+
+    public MonoBehaviour Active => activePivot;
 }

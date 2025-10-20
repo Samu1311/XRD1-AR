@@ -1451,6 +1451,7 @@ struct MeshQueue_t26B4E176CCC12C4B59FB67D25E0926EA697E4FC8;
 struct MeshRenderer_t4B7747212F0B88244BB7790C61AE124BFC15BAAE;
 struct MethodInfo_t;
 struct MinFloatParameter_tA4BCE8AF64068D3761A8689DB27D0B04238525F9;
+struct MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71;
 struct MotionBlur_tCC3C4B1EDF692B22533C0ADBCE5D92101E566161;
 struct MotionBlurModeParameter_tB166307F460D4DF85A966BE6EDA29279F6B4FF14;
 struct MotionBlurQualityParameter_tD50C3C4531FB58AB4B8C2917F41668C3EE54A637;
@@ -1522,7 +1523,6 @@ struct Renderer_t320575F223BCB177A982E5DDB5DB19FAA89E7FBF;
 struct RenderersBatchersContext_t5D87D79D64D87CEC72560F8BC4690997349F2F98;
 struct ResolvedStyleAccess_t226CC840EBACEE31CE1139ED5F717532AFFAEB45;
 struct RewindableAllocator_tB18F8ADC8F2EE36E1F51FCCCFF0AC093108EF254;
-struct RotateAndZoomPivot_tF958D642546E5EE9F0C3F8666B0FC4C556D5AF27;
 struct RuntimeReferenceImageLibrary_tBAE57A7BC9A82E302D6DC78EB9D90EC36F5995BF;
 struct SVSquare_tC62C6F35B188B560D138075AE7B91719F38F8895;
 struct SafeSerializationManager_tCBB85B95DFD1634237140CD892E82D06ECB3F5E6;
@@ -11626,7 +11626,7 @@ struct v64_t9C4037532D386FF1E9B95E5FBD01FEF472AC1F96
 	};
 };
 #pragma pack(push, tp, 1)
-struct __StaticArrayInitTypeSizeU3D398_tD51AC6FCF9305A37F93D45289EEDF5D1BC7D8455 
+struct __StaticArrayInitTypeSizeU3D395_t5282534DFB3129D166E7352CAA08FBE4966C0483 
 {
 	union
 	{
@@ -11636,12 +11636,12 @@ struct __StaticArrayInitTypeSizeU3D398_tD51AC6FCF9305A37F93D45289EEDF5D1BC7D8455
 			{
 			};
 		};
-		uint8_t __StaticArrayInitTypeSizeU3D398_tD51AC6FCF9305A37F93D45289EEDF5D1BC7D8455__padding[398];
+		uint8_t __StaticArrayInitTypeSizeU3D395_t5282534DFB3129D166E7352CAA08FBE4966C0483__padding[395];
 	};
 };
 #pragma pack(pop, tp)
 #pragma pack(push, tp, 1)
-struct __StaticArrayInitTypeSizeU3D589_t947ADD3BCBC64EDD1316A1014C679C1D4A01F218 
+struct __StaticArrayInitTypeSizeU3D586_t8EC45E4DC3A262F450C57EE5C60CD7ADC60240C5 
 {
 	union
 	{
@@ -11651,7 +11651,7 @@ struct __StaticArrayInitTypeSizeU3D589_t947ADD3BCBC64EDD1316A1014C679C1D4A01F218
 			{
 			};
 		};
-		uint8_t __StaticArrayInitTypeSizeU3D589_t947ADD3BCBC64EDD1316A1014C679C1D4A01F218__padding[589];
+		uint8_t __StaticArrayInitTypeSizeU3D586_t8EC45E4DC3A262F450C57EE5C60CD7ADC60240C5__padding[586];
 	};
 };
 #pragma pack(pop, tp)
@@ -47659,7 +47659,7 @@ struct ARTrackable_t1D98417758C08E98A333CDEC0C2C1688CE10B2E0  : public MonoBehav
 };
 struct ActivePivotManager_t5D9E6BB1BE3B0A24C24B12092A305D268AB12663  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
-	RotateAndZoomPivot_tF958D642546E5EE9F0C3F8666B0FC4C556D5AF27* ___U3CActiveU3Ek__BackingField;
+	MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71* ___activePivot;
 	bool ___highlightActive;
 };
 struct AllocateBinsPerBatch_t5239CCD1592A1183C158D7DBFBCB38CFB8A65904 
@@ -48129,36 +48129,26 @@ struct Rotate_t3280DFA30ADF04B60D2B142844F3B2364A472EAE  : public MonoBehaviour_
 	Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7 ___lastMidpoint;
 	bool ___initialized;
 };
-struct RotateAndZoomPivot_tF958D642546E5EE9F0C3F8666B0FC4C556D5AF27  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
+struct RotateOnlyPivot_tA6E62469B6A23FF080511E451F164C1616990908  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
 	Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___targetModel;
 	float ___yawSpeed;
 	float ___pitchSpeed;
 	float ___minPitch;
 	float ___maxPitch;
-	float ___pinchSpeed;
-	float ___minScale;
-	float ___maxScale;
-	float ___initialScale;
 	float ___smoothTime;
 	RendererU5BU5D_t32FDD782F67917B2291EA4FF242719877440A02A* ___highlightRenderers;
 	Color_tD001788D726C3A7F1379BEED0260B9591F440C1F ___highlightColor;
 	ColorU5BU5D_t612261CF293F6FFC3D80AB52259FF0DC2B2CC389* ____origEmissionColors;
 	bool ___rotating;
-	bool ___pinching;
 	bool ___isTracking;
 	Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7 ___lastFingerPos;
-	float ___lastPinchDist;
 	float ___targetYaw;
 	float ___targetPitch;
 	float ___yawSmoothed;
 	float ___pitchSmoothed;
 	float ___yawVel;
 	float ___pitchVel;
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___baselineScale;
-	float ___targetScaleFactor;
-	float ___scaleSmoothed;
-	float ___scaleVel;
 	Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ____cam;
 };
 struct SceneTemplate_RotateCube_tB6D99CC88F0E89517A2E6E071F0334FE69FB44CC  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
@@ -48586,10 +48576,18 @@ struct XRSessionSubsystem_t1E6E6CD0C279BA8BC4E4ED94E539552036B9C399  : public Su
 };
 struct Zoom_tF5A194929F87C356C89A06E28D8DD7C6DF48C7D6  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
-	float ___zoomSpeed;
+	float ___pinchSpeed;
 	float ___minScale;
 	float ___maxScale;
-	GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* ___targetObject;
+	float ___smoothTime;
+	bool ___enableDebug;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___originalScale;
+	float ___currentScale;
+	float ___targetScale;
+	float ___scaleVelocity;
+	bool ___isPinching;
+	float ___lastPinchDistance;
+	Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E184* ___cam;
 };
 struct ARCameraAfterOpaquesRenderPass_t97A99EEC797F5743C04345EFD699DC5A839CF2EB  : public ARCameraBackgroundRenderPass_tFA1BB766F4D1E844E55CF83C9682BB36E8ADD862
 {
@@ -51767,8 +51765,8 @@ struct BreadcrumbItem_t66161689253437D38389B3AA1932A8ED3A460465  : public Link_t
 };
 struct U3CPrivateImplementationDetailsU3E_t0F5473E849A5A5185A9F4C5246F0C32816C49FCA_StaticFields
 {
-	__StaticArrayInitTypeSizeU3D398_tD51AC6FCF9305A37F93D45289EEDF5D1BC7D8455 ___239D887678335B338570ADFF8E9869FABFFEC6D789331B42671BD5DA9C1C1B4A;
-	__StaticArrayInitTypeSizeU3D589_t947ADD3BCBC64EDD1316A1014C679C1D4A01F218 ___C1807A93091BC8461FAEA665DF5362FF65E69D4445B11E95DB8B43539E8FCED0;
+	__StaticArrayInitTypeSizeU3D586_t8EC45E4DC3A262F450C57EE5C60CD7ADC60240C5 ___0327905690B6290FA1F4DC94383552CAB46FD969B7031469FB53642C930EE26C;
+	__StaticArrayInitTypeSizeU3D395_t5282534DFB3129D166E7352CAA08FBE4966C0483 ___06E9D8B7F5A6CA3930DA0DB60F2001C8272E70AF0B9075983384436865412067;
 };
 struct U3CPrivateImplementationDetailsU3E_t56F624E1051A2E261613B6A81CA2333397F49CB3_StaticFields
 {
@@ -55990,6 +55988,10 @@ struct XROrigin_t5E534A6D886991AF3C1C64127E19A3A510009CFE_StaticFields
 struct XRSessionSubsystem_t1E6E6CD0C279BA8BC4E4ED94E539552036B9C399_StaticFields
 {
 	ConfigurationChooser_t4DFAB6BE3767C3C5DA0E43FA16CD067009A487C2* ___s_DefaultConfigurationChooser;
+};
+struct Zoom_tF5A194929F87C356C89A06E28D8DD7C6DF48C7D6_StaticFields
+{
+	Zoom_tF5A194929F87C356C89A06E28D8DD7C6DF48C7D6* ___activeObject;
 };
 struct GetPropertyVisitor_t88183F280884F26458B42DAF173F005F3625F540_StaticFields
 {
@@ -65608,13 +65610,13 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize9711 = { sizeof(ActivePivotM
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9712;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize9712 = { sizeof(ResetRelay_tFC1C896224C639975B2653AAE2742F9895EB7847), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9713;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize9713 = { sizeof(RotateAndZoomPivot_tF958D642546E5EE9F0C3F8666B0FC4C556D5AF27), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize9713 = { sizeof(RotateOnlyPivot_tA6E62469B6A23FF080511E451F164C1616990908), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9714;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize9714 = { sizeof(ImagePrefab_tB5675EA3E03DDFC89B72B6B9C3625C0326D6DFC0)+ sizeof(RuntimeObject), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9715;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize9715 = { sizeof(TrackedImageSpawner_tE3730ADFF124DBBA04DFAC564C3C78B88586A7BB), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9716;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize9716 = { sizeof(Zoom_tF5A194929F87C356C89A06E28D8DD7C6DF48C7D6), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize9716 = { sizeof(Zoom_tF5A194929F87C356C89A06E28D8DD7C6DF48C7D6), -1, sizeof(Zoom_tF5A194929F87C356C89A06E28D8DD7C6DF48C7D6_StaticFields), 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9717;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize9717 = { sizeof(SceneTemplate_RotateCube_tB6D99CC88F0E89517A2E6E071F0334FE69FB44CC), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9718;
@@ -65626,9 +65628,9 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize9720 = { sizeof(CutoutMaskUI
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9721;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize9721 = { sizeof(ARFeatheredPlaneMeshVisualizerCompanion_tDE56FFED5B1D60BF9CFFE40E87360C312EA938E3), -1, 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9722;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize9722 = { sizeof(__StaticArrayInitTypeSizeU3D398_tD51AC6FCF9305A37F93D45289EEDF5D1BC7D8455)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D398_tD51AC6FCF9305A37F93D45289EEDF5D1BC7D8455), 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize9722 = { sizeof(__StaticArrayInitTypeSizeU3D395_t5282534DFB3129D166E7352CAA08FBE4966C0483)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D395_t5282534DFB3129D166E7352CAA08FBE4966C0483), 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9723;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize9723 = { sizeof(__StaticArrayInitTypeSizeU3D589_t947ADD3BCBC64EDD1316A1014C679C1D4A01F218)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D589_t947ADD3BCBC64EDD1316A1014C679C1D4A01F218), 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize9723 = { sizeof(__StaticArrayInitTypeSizeU3D586_t8EC45E4DC3A262F450C57EE5C60CD7ADC60240C5)+ sizeof(RuntimeObject), sizeof(__StaticArrayInitTypeSizeU3D586_t8EC45E4DC3A262F450C57EE5C60CD7ADC60240C5), 0, 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9724;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize9724 = { sizeof(U3CPrivateImplementationDetailsU3E_t0F5473E849A5A5185A9F4C5246F0C32816C49FCA), -1, sizeof(U3CPrivateImplementationDetailsU3E_t0F5473E849A5A5185A9F4C5246F0C32816C49FCA_StaticFields), 0 };
 IL2CPP_EXTERN_C_CONST Il2CppTypeDefinitionSizes g_typeDefinitionSize9725;

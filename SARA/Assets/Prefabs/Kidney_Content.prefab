@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5495012879207158277}
   - component: {fileID: 3456533681797211695}
+  - component: {fileID: 1057775420625597413}
   m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
@@ -50,14 +51,27 @@ MonoBehaviour:
   pitchSpeed: 0.1
   minPitch: -80
   maxPitch: 80
-  pinchSpeed: 0.0025
-  minScale: 0.1
-  maxScale: 2
-  initialScale: 1
   smoothTime: 0.05
   highlightRenderers:
   - {fileID: 7389420352570874815}
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+--- !u!114 &1057775420625597413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6660767096843504741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0c32c30ebe6d640a38bc174a900f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Zoom
+  pinchSpeed: 0.003
+  minScale: 0.5
+  maxScale: 3
+  smoothTime: 0.08
+  enableDebug: 1
 --- !u!1 &7035713212960589303
 GameObject:
   m_ObjectHideFlags: 0
