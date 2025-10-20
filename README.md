@@ -57,6 +57,24 @@ Each work session will be logged in `/blogposts` with progress updates and refle
 - Alejandro Bautista 
 
 ---
+## 📚 Project Blog Index – SARA (AR Biology Visualizer)
+
+Follow the development journey of our Augmented Reality project through weekly documentation posts:
+
+| # | Blog Title | Description |
+|:-:|-------------|--------------|
+| 01 | [**Exercises Intro**](blogposts/01_Exercises_Intro.md) | Introduction to initial XR exercises and setup. |
+| 02 | [**Software Documentation**](blogposts/02_Software_Documentation.md) | Full technical documentation for the SARA project, including use cases and system requirements. |
+| 03 | [**Process Start**](blogposts/03_Process_Start.md) | Project kickoff and initial implementation steps. |
+| 04 | [**Process Continues**](blogposts/04_Process_Continues.md) | Further progress and first integration of AR features. |
+| 05 | [**Finalization of Use Cases**](blogposts/05_Finalization_of_Use_Cases.md) | Refinement of requirements, functionalities, and early testing of core features. |
+| 06 | [**SARA – Final Integrations**](blogposts/06_SARA_Final_Integrations.md) | Final stage: model integrations, rotation refinements, and final preparation for the complete AR experience. |
+
+---
+
+🧠 **Tip:** Each entry reflects the evolution of the project from early concept to a fully functional Augmented Reality biology visualizer.  
+
+---
 
 ## 🛠️ Getting Started
 
