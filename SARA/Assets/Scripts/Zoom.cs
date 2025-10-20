@@ -67,7 +67,7 @@ public class Zoom : MonoBehaviour
 
             if (!isPinching)
             {
-                // Check if this is the object we should grab
+                // check if this is the object we should grab
                 if (activeObject == null)
                 {
                     Vector2 midpoint = (p0 + p1) * 0.5f;
@@ -81,7 +81,7 @@ public class Zoom : MonoBehaviour
             }
             else if (activeObject == this)
             {
-                // Check if both touches are still active (moved phase)
+                // check if both touches are still active (moved phase)
                 var phase0 = touch0.phase.ReadValue();
                 var phase1 = touch1.phase.ReadValue();
 
