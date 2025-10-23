@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public class SkullAnnotationAnchor : MonoBehaviour
+{
+    [Header("Annotation Info")]
+    [Tooltip("Text to show on the label")]
+    public string title = "Sagittal suture";
+
+    [TextArea(3, 10)]
+    [Tooltip("Full description text that appears when annotation expands")]
+    public string description = "Detailed explanation of this bone or feature.";
+
+    [Header("Placement")]
+    [Tooltip("Meters to push the label outward from the skull surface")]
+    public float labelOutOffset = 0.03f;
+
+    [Tooltip("Optional manual normal override; if zero, manager estimates from skull center")]
+    public Vector3 outwardHint = Vector3.zero;
+
+    // Editor gizmo so we can see anchors
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.lightBlue;
+        Gizmos.DrawSphere(transform.position, 0.003f);
+    }
+}
