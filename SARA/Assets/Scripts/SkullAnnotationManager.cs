@@ -3,24 +3,44 @@ using UnityEngine;
 public class SkullAnnotationManager : MonoBehaviour
 {
     public Transform skullRoot;
-    public Camera cam;
+    public Camera cam;                             // leave empty in prefab; will auto-assign to Camera.main
     public AnnotationLabel labelPrefab;
     public AnchorHotspot hotspotPrefab;
-    public LayerMask occlusionMask; // only the "Skull" layer
+    public LayerMask occlusionMask;                // only the "Skull" layer
+
+    void Awake()
+    {
+        // Prefab-safe: try to resolve camera early
+        if (!cam) cam = Camera.main;
+    }
 
     void Start()
     {
+        // In case the main camera was created/tagged after Awake (XR can do this)
         if (!cam) cam = Camera.main;
+
         Rebuild(skullRoot);
     }
 
     public void Rebuild(Transform newSkullRoot)
     {
         if (newSkullRoot) skullRoot = newSkullRoot;
-        if (!skullRoot || !labelPrefab || !hotspotPrefab) { Debug.LogError("Assign skullRoot, labelPrefab, hotspotPrefab."); return; }
+        if (!skullRoot || !labelPrefab || !hotspotPrefab)
+        {
+            Debug.LogError("Assign skullRoot, labelPrefab, hotspotPrefab.");
+            return;
+        }
+
+        // Ensure we have a camera before initializing labels/hotspots
+        if (!cam) cam = Camera.main;
+        if (!cam)
+        {
+            Debug.LogWarning("SkullAnnotationManager: No camera found (Camera.main). Labels/hotspots will initialize without a camera.");
+        }
 
         // clear old
-        for (int i = transform.childCount - 1; i >= 0; i--) DestroyImmediate(transform.GetChild(i).gameObject);
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(i).gameObject);
 
         // bounds & scale
         var rs = skullRoot.GetComponentsInChildren<Renderer>(true);
@@ -38,8 +58,10 @@ public class SkullAnnotationManager : MonoBehaviour
         var anchors = skullRoot.GetComponentsInChildren<SkullAnnotationAnchor>(true);
         foreach (var a in anchors)
         {
-            if (a.outwardHint == Vector3.zero) a.outwardHint = (a.transform.position - b.center).normalized;
-            if (a.labelOutOffset < 0.5f * outOff) a.labelOutOffset = outOff;
+            if (a.outwardHint == Vector3.zero)
+                a.outwardHint = (a.transform.position - b.center).normalized;
+            if (a.labelOutOffset < 0.5f * outOff)
+                a.labelOutOffset = outOff;
 
             // create label (hidden)
             var label = Instantiate(labelPrefab, a.transform.position, Quaternion.identity, transform);
@@ -48,11 +70,15 @@ public class SkullAnnotationManager : MonoBehaviour
             label.lineStartOffset = lineOff;
 
             var lr = label.GetComponent<LineRenderer>();
-            if (lr) { lr.widthMultiplier = lineW; lr.widthCurve = AnimationCurve.Linear(0, 1, 1, 1); }
+            if (lr)
+            {
+                lr.widthMultiplier = lineW;
+                lr.widthCurve = AnimationCurve.Linear(0, 1, 1, 1);
+            }
 
             // create hotspot
             var hs = Instantiate(hotspotPrefab, a.transform.position, Quaternion.identity, transform);
-            hs.visual = hs.transform.GetChild(0);                // assumes child "Visual"
+            hs.visual = hs.transform.GetChild(0);  // assumes child "Visual"
             hs.Initialize(a, label, cam, occlusionMask, hotspotSize);
         }
     }
