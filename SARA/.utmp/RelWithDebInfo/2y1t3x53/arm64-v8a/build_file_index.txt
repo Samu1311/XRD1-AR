@@ -1,0 +1,2 @@
+C:\Gintas mape\SEM9\XR\AR\XRD1-AR\SARA\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Gintas mape\SEM9\XR\AR\XRD1-AR\SARA\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

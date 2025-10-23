@@ -1044,6 +1044,11 @@ MonoBehaviour:
   description: Detailed explanation of this bone or feature.
   labelOutOffset: 0.15
   outwardHint: {x: 0, y: 0, z: 0}
+  raycaster: {fileID: 0}
+  planeManager: {fileID: 0}
+  anchorManager: {fileID: 0}
+  currentAnchor: {fileID: 0}
+  spawned: {fileID: 0}
 --- !u!20 &2512387468973847745
 Camera:
   m_ObjectHideFlags: 0
